@@ -9,8 +9,7 @@
 - Clone repository
 - Run `npm install`
 - Edit `mcbe.config.js` to fit your needs
-- `npm run dev` for development enviorment with split api and frontend
-- `npm start` to build files for production and start server
+- `npm start` to build webpack and start server
 
 ### Roadmap
 - [x] Create Node Interface For BDS.exe
