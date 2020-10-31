@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+html( lang="en" )
+  head
+    base( href="/" )
+
+    meta( charset="UTF-8" )
+    meta( name="viewport" content="width=device-width, initial-scale=1.0" )
+
+    link(rel="icon", type="image/png", href=require('./assets/kurafuto.png'))
+    meta( name="theme-color" content=require('../kurafuto.config').meta.themeColor )
+
+    meta( property="og:url" content=require('../kurafuto.config').meta.url )
+
+    meta( name="twitter:image:src" content=require('../kurafuto.config').meta.thumbnail )        
+    meta( property="og:image" content=require('../kurafuto.config').meta.thumbnail )
+    meta( name="twitter:card" content="summary_large_image" )
+
+    meta( property="og:type" content="object" )
+
+    meta( property="og:description" name="description" content=require('../kurafuto.config').meta.description )
+    meta( name="twitter:description" content=require('../kurafuto.config').meta.description )
+
+    meta( name="twitter:site" content=require('../kurafuto.config').meta.title )
+    meta( property="og:title" content=require('../kurafuto.config').meta.title )
+    meta( name="twitter:title" content=require('../kurafuto.config').meta.title )
+    meta( property="og:site_name" content=require('../kurafuto.config').meta.title )
+
+    title #{ require('../kurafuto.config').meta.title }
+    
+  body

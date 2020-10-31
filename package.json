@@ -1,0 +1,62 @@
+{
+  "name": "kurafuto",
+  "version": "1.0.0",
+  "description": "Console panel for element zero console",
+  "main": "index.js",
+  "scripts": {
+    "dev": "multiscript npm run lint + npm run dev:frontend + npm run dev:backend",
+    "start": "npm run build && cross-env NODE_ENV=production node server",
+    "dev:frontend": "cross-env NODE_ENV=development webpack-dev-server",
+    "dev:backend": "cross-env NODE_ENV=development nodemon -q server",
+    "build": "webpack --production",
+    "lint": "eslint --fix --ext .js,.vue ./"
+  },
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "copy-webpack-plugin": "^6.1.1",
+    "cross-env": "^7.0.2",
+    "css-loader": "^4.3.0",
+    "eslint": "^7.10.0",
+    "eslint-plugin-vue": "^7.0.0",
+    "file-loader": "^6.1.0",
+    "html-webpack-plugin": "^4.5.0",
+    "multiscript": "^0.1.8",
+    "nodemon": "^2.0.4",
+    "pug": "^3.0.0",
+    "pug-loader": "^2.4.0",
+    "pug-plain-loader": "^1.0.0",
+    "raw-loader": "^4.0.1",
+    "sass": "^1.26.11",
+    "sass-loader": "^10.0.2",
+    "style-loader": "^1.2.1",
+    "vue": "^2.6.12",
+    "vue-eslint-parser": "^7.1.0",
+    "vue-loader": "^15.9.3",
+    "vue-svg-loader": "^0.16.0",
+    "vue-template-compiler": "^2.6.12",
+    "webpack": "^4.44.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "chalk": "^4.1.0",
+    "events": "^3.2.0",
+    "express": "^4.17.1",
+    "fs": "0.0.1-security",
+    "ora": "^5.1.0",
+    "path": "^0.12.7",
+    "vue-router": "^3.4.5",
+    "vuex": "^3.5.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NobUwU/kurafuto.git"
+  },
+  "author": "Nobu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/NobUwU/kurafuto/issues"
+  },
+  "homepage": "https://github.com/NobUwU/kurafuto#readme"
+}

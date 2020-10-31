@@ -1,0 +1,25 @@
+@import './theme.scss';
+
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+  letter-spacing: 0.2px;
+}
+
+html, body {
+  height: 100%;
+  background-color: var(--background);
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+
+  &:hover {
+    color: var(--accent);
+    text-decoration: underline;
+  }
+}
