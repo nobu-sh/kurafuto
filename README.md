@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://animiru.dev/kurafuto.png"/>
-  <h1>Kurafuto</h1>
+  <h1 align="center">Kurafuto</h1>
 </p>
 
 ### Roadmap
