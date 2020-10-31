@@ -6,6 +6,7 @@
 
 ### How to Use
 
+Node version something is required... lets just call it node v8 or higher I suppose
 - Clone repository
 - Run `npm install`
 - Edit `mcbe.config.js` to fit your needs
