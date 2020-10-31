@@ -6,9 +6,10 @@
 
 ### How to Use
 
-- Clone or download this repository
+- Clone repository
 - Run `npm install`
-- `npm run dev` for development enviorment with split api and frontend, `npm start` to build files for production and start server
+- `npm run dev` for development enviorment with split api and frontend
+- `npm start` to build files for production and start server
 
 ### Roadmap
 - [x] Create Node Interface For BDS.exe
