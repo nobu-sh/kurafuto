@@ -9,7 +9,7 @@
 Node version something is required... lets say v8 or higher I suppose
 - Clone repository
 - Run `npm install`
-- Edit `mcbe.config.js` to fit your needs
+- Edit `kurafuto.config.js` to fit your needs
 - `npm start` to build webpack and start server
 
 ### Roadmap
