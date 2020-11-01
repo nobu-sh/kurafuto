@@ -1,4 +1,4 @@
-const Kurafuto = require("../base/kurafuto")
+const Kurafuto = require("../base/Kurafuto")
 const config = require("../../kurafuto.config")
 
 module.exports = {
