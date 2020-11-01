@@ -17,4 +17,4 @@ app.listen(port)
 
 console.log(`Open on port ${port}`)
 
-const { Kurafuto } = require("./instances/kurafuto")
+//const { Kurafuto } = require("./instances/kurafuto")

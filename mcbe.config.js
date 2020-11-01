@@ -2,6 +2,11 @@ module.exports = {
   // Path to bedrock server start (relative from this files current dir)
   serverEXEDir: "../Server Template 736428/bedrock_server_mod.exe",
 
+  adminLoginCredentials: {
+    username: "Kurafuto",
+    password: "Kurafuto",
+  },
+
   output: {
     // Allowed Colors
     // black, red, green, yellow, blue, magenta, cyan, white, gray

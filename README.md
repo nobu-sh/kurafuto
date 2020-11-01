@@ -16,5 +16,7 @@
 - [x] Add chat api events
 - [ ] Create web interface
 - [ ] Protect interface via logins
+- [ ] Add multiple logins support via database
 - [ ] Add script support for node programs on the side (like a discord.js bot)
 - [ ] Multiple server support
+- [ ] Golang rewrite
