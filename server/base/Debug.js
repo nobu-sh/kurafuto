@@ -49,6 +49,7 @@ class Debug {
     if (line.toLowerCase() === "stopall") return await this.kurafuto.Stop_All()
     else if (line.toLowerCase() === "stop") return await this.kurafuto.Stop_Server()
     else if (line.toLowerCase() === "restart") return this.kurafuto.Restart_Server()
+    else if (line.toLowerCase() === "start") return this.kurafuto.Create_Server()
     else return this.kurafuto.Execute_Command(line.toString())
   }
 }
