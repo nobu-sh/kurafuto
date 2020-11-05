@@ -45,5 +45,9 @@ http.listen(port, () => console.log(`Express server listening on port ${port}`))
 
 const { Kurafuto } = require("./instances/kurafuto")
 if (config.debugEnabled) {
+  console.log(chalk.bgRed.black("Debug Enabled, multiple servers will result in \"diverse\" logs"))
+  if (process.env.NODE_ENV === "development") {
+    console.log(chalk.bgRed.black("Kurafuto running in development mode, command line will not work!"))
+  }
   const debug = new (require('./base/Debug'))(Kurafuto)
 }
