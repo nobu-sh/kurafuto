@@ -25,13 +25,13 @@ class Debug {
   }
   async Chat_Handle() {
     this.kurafuto.on("KURAFUTO_CHAT", res => {
-      console.log(`${chalk.magentaBright("{Kurafuto ChatAPI}")} ${chalk.blue(`<${res.author}>`)} ${res.message}`)
+      console.log(`${chalk.magentaBright("{KurafutoChat::DEBUG}")} ${chalk.blue(`<${res.author}>`)} ${res.message}`)
     })
   }
   async Log_Handle() {
     this.kurafuto.on("KURAFUTO_LOG", async res => {
       let color = await this.Get_Color(res.process)
-      console.log(`${chalk.magentaBright("{Kurafuto LogAPI}")} ${chalk.gray(res.timestamp)} ${chalk `{${color} ${res.process}}`} ${res.log}`)
+      console.log(`${chalk.magentaBright("{KurafutoLog::DEBUG}")} ${chalk.gray(res.timestamp)} ${chalk `{${color} ${res.process}}`} ${res.log}`)
     })
   }
   async Get_Color(ExPR) {
