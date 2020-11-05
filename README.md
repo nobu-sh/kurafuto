@@ -23,6 +23,7 @@ Node version something is required... lets say v8 or higher I suppose
 - [ ] Customizable auto complete for web interface
 - [ ] Add script support for node programs on the side (like a discord.js bot)
 - [ ] Multiple server support
+- [ ] Other Server Launcher Support (PocketMine, JsPrismarine, etc)
 - [ ] Golang rewrite
 
 ### Some Random Todo
