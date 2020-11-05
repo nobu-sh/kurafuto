@@ -3,6 +3,7 @@ const { EventEmitter } = require("events")
 const { spawn } = require('child_process')
 const { resolve } = require('path')
 const { existsSync } = require("fs")
+const chalk = require("chalk")
 
 let _LogQueue = []
 
