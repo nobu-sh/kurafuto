@@ -11,12 +11,9 @@ module.exports = {
     url: 'https://localhost:8080',
   },
 
-  
+  sessionSec: "Some Super Random Secret Here",  
+
   // MCBE Stuff
-  adminLoginCredentials: {
-    username: "Kurafuto",
-    password: "Kurafuto",
-  },
 
   // Path to bedrock server start (relative from root of this folder)
   serverEXEDir: "../Server Template 736428/bedrock_server_mod.exe",

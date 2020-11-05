@@ -15,11 +15,17 @@ Node version something is required... lets say v8 or higher I suppose
 ### Roadmap
 - [x] Create Node Interface For BDS.exe
 - [x] Add chat api events
-- [ ] Protect interface via logins
-- [ ] Add multiple logins support via database
+- [X] Protect interface via logins
+- [X] Add multiple logins support via database
+- [ ] Add owner registeration key generation
 - [ ] Create web interface
 - [x] Redo log handler for interface
 - [ ] Customizable auto complete for web interface
 - [ ] Add script support for node programs on the side (like a discord.js bot)
 - [ ] Multiple server support
 - [ ] Golang rewrite
+
+### Some Random Todo
+- [ ] Custom loading icons
+- [ ] More custom logos
+- [ ] Pixi.js for dashboard graphs and animations

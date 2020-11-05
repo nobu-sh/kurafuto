@@ -280,9 +280,24 @@
 
 <script>
   import Icon from '@/components/Icon'
+  import Axios from 'axios'
+
   export default {
     components: {
       Icon,
+    },
+    mounted() {
+      this.isLoggingIn = true
+      Axios({
+        method: "get",
+        url: "/api/isauth",
+      }).then(res => {
+        if (res.data.isAuth) {
+          return this.redirectDash()
+        } else {
+          this.isLoggingIn = false
+        }
+      })
     },
     data() {
       return {
@@ -301,15 +316,33 @@
         if (!this.username || this.username === "") return this.showErr("Please specify a username to continue")
         if (!this.password || this.password === "") return this.showErr("Please specify a password to continue")
         this.isLoggingIn = true
-        alert("Everything working as planned")
-        // this.username = null
-        // this.password = null
+        Axios({
+          method: "post",
+          url: "/api/signin",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          data: {
+            username: this.username,
+            password: this.password,
+          },
+        }).then(res => {
+          if (res.data.responseCode === 0) {
+            this.redirectDash()
+          } else {
+            this.isLoggingIn = false
+            this.showErr("Incorrect Username/Password")
+          }
+        })
       },
       showErr: function(message) {
         this.errmsg = message
         setTimeout(() => {
           this.errmsg = null
         },10000)
+      },
+      redirectDash() {
+        this.$router.push('/dashboard')
       },
     },
   }
