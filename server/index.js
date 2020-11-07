@@ -29,6 +29,7 @@ app.use(session({
   name: "Kurafuto OwO",
   cookie: {
     sameSite: "strict",
+    expires: 1000 * 60 * 60 * 24 * 365 * 2,
     //httpOnly: true,
   },
 }))
