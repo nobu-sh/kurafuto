@@ -18,7 +18,7 @@ class Kurafuto extends EventEmitter {
     super()
     this.server = resolve(options.server.path)
     this.configPath = resolve(__dirname, "../../", options.configPath)
-    if (!existsSync(this.server)) return this.EXIT(`Path given for server ${options.server.name} is not a valid path, please update the file path`)
+    if (!existsSync(this.server)) return this.EXIT(`Path given for server "${chalk.magenta(options.server.name)}" is not a valid path, please update the file path`)
     if (!existsSync(this.configPath)) return this.EXIT("Path to MCBE config is does not exist!")
     this.config = require(this.configPath)
     this.stopping = false
@@ -145,6 +145,13 @@ class Kurafuto extends EventEmitter {
       message: _CleanChat,
     }
   }
+
+  /* 
+  * DEPRECATED, would allow the child servers the power to kill themselves and the master process
+  * Is no bueno when multiple servers are running
+  * Leaving code here as an exmaple
+  */
+
   // async Stop_All() {
   //   if (this.stopping) return {
   //     "rejected": true,
@@ -167,6 +174,7 @@ class Kurafuto extends EventEmitter {
   //     process.exit()
   //   }, 3000)
   // }
+
   async Stop_Server() {
     return new Promise((resolve) => {
       if (this.stopping) resolve({
@@ -266,13 +274,11 @@ class Kurafuto extends EventEmitter {
   }
   async EXIT (message) {
     console.log(`\n\n${chalk.bgRed("Error")} ${chalk.grey.bold(message)}\n\n`)
-    setInterval(() => {
-      this.emit("KURAFUTO_ERR", {
-        serverName: this.serverName,
-        serverID: this.ServerID,
-        content: message,
-      })
-    }, 20000)
+    this.emit("KURAFUTO_ERR", {
+      serverName: this.serverName,
+      serverID: this.ServerID,
+      content: message,
+    })
   }
 }
 

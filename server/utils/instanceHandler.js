@@ -94,13 +94,11 @@ async function update(name, newName, newPath, newPort) {
       name: newName,
     }
   }
-
-  let update = await ServerInstance.findOneAndUpdate({ name }, { newData })
-  await update
-    .save()
+  let update = await ServerInstance.updateOne({ name }, newData)
 
   return {
     updated: true,
+    newData,
     info: update,
   }
 }

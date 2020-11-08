@@ -6,6 +6,7 @@ let started = false
 let instances = []
 class Instances extends EventEmitter {
   constructor() {
+    super()
     this.start()
   }
   /**
@@ -100,7 +101,9 @@ class Instances extends EventEmitter {
       info: `No instances running with the name "${name}"`,  
     }
 
-    await server.instance.Stop_Server()
+    if (server.instance.child) {
+      await server.instance.Stop_Server()
+    }
     instances = instances.filter(s => s.name !== name)
 
     return {
@@ -119,7 +122,9 @@ class Instances extends EventEmitter {
       info: `No instances running with the id "${id}"`,  
     }
 
-    await server.instance.Stop_Server()
+    if (server.instance.child) {
+      await server.instance.Stop_Server()
+    }
     instances = instances.filter(s => !s.id.equals(id))
 
     return {

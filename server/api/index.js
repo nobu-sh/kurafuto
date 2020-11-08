@@ -96,7 +96,7 @@ router.post('/isonline', isAuth, (req, res) => {
 })
 
 // Create Server Instance
-router.post('/server/instance', isAuth, (req, resp) => {
+router.post('/server/instance', (req, resp) => {
   if (!req.body.path || !req.body.name || !req.body.port) {
     return resp.status(400).json({
       "info": "Bad Request",
@@ -115,7 +115,7 @@ router.post('/server/instance', isAuth, (req, resp) => {
 })
 
 // Update Server Instance
-router.patch('/server/instance', isAuth, (req, resp) => {
+router.patch('/server/instance', (req, resp) => {
   if (!req.body.name) {
     return resp.status(400).json({
       "info": "Bad Request",
@@ -125,11 +125,11 @@ router.patch('/server/instance', isAuth, (req, resp) => {
         "?newPath": "",
         "?newPort": "",
       },
-      "hint": "'\' is an escape sequence, keep that in mind when specifying the file path",
-      "hint": "? should not be included in request, ? means optional. (At least 1 of the fields marked with '?' are required)",
+      "hint uno": "'\' is an escape sequence, keep that in mind when specifying the file path",
+      "hint dos": "? should not be included in request, ? means optional. (At least 1 of the fields marked with '?' are required)",
     })
   }
-  if (!req.body.newPath || !req.body.newName || !req.body.newPort) {
+  if (!req.body.newPath && !req.body.newName && !req.body.newPort) {
     return resp.status(400).json({
       "info": "Bad Request",
       "request": {
@@ -138,8 +138,8 @@ router.patch('/server/instance', isAuth, (req, resp) => {
         "?newPath": "",
         "?newPort": "",
       },
-      "hint": "'\' is an escape sequence, keep that in mind when specifying the file path",
-      "hint": "? should not be included in request, ? means optional. (At least 1 of the fields marked with '?' are required)",
+      "hint uno": "'\' is an escape sequence, keep that in mind when specifying the file path",
+      "hint dos": "? should not be included in request, ? means optional. (At least 1 of the fields marked with '?' are required)",
     })
   }
   IH.update(req.body.name, req.body.newName ? req.body.newName : null, req.body.newPath ? req.body.newPath : null, req.body.newPort ? req.body.newPort : null).then(async res => {
@@ -150,7 +150,7 @@ router.patch('/server/instance', isAuth, (req, resp) => {
 })
 
 // Delete Server Instance
-router.delete('/server/instance', isAuth, async (req, resp) => {
+router.delete('/server/instance', async (req, resp) => {
   if (!req.body.name) {
     return resp.status(400).json({
       "info": "Bad Request",
@@ -167,8 +167,8 @@ router.delete('/server/instance', isAuth, async (req, resp) => {
 })
 
 // Get One Server Instance
-router.get('/server/instance/one', isAuth, (req, resp) => {
-  IH.getOne(req.body.name).then(res => {
+router.get('/server/instance/one/:serverName', isAuth, (req, resp) => {
+  IH.getOne(req.params.serverName).then(res => {
     resp.status(200).json(res)
   })
 })

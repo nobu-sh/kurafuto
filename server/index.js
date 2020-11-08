@@ -16,6 +16,7 @@ const db = require('./database/mongo')
 db.then(() => console.log(`${chalk.magentaBright("{Kurafuto Database}")} ${chalk.gray(new Date().toISOString())} ${chalk.green("[Mongo]")} Successfully established a connection to database ${config.mongoDatabase} through user ${config.mongoUsername}`))
   .catch(err => {
     console.log(`${chalk.magentaBright("{Kurafuto Database}")} ${chalk.gray(new Date().toISOString())} ${chalk.red("[Mongo]")} Could not establish a connection, action failed with ${err}`)
+    console.log(chalk.red("Stopping backend process, please connect database then restart!"))
     process.exit()
   })
 
