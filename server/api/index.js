@@ -96,7 +96,7 @@ router.post('/isonline', isAuth, (req, res) => {
 })
 
 // Create Server Instance
-router.post('/server/instance', (req, resp) => {
+router.post('/server/instance', isAuth, (req, resp) => {
   if (!req.body.path || !req.body.name || !req.body.port) {
     return resp.status(400).json({
       "info": "Bad Request",
@@ -116,7 +116,6 @@ router.post('/server/instance', (req, resp) => {
 
 // Update Server Instance
 router.patch('/server/instance', isAuth, (req, resp) => {
-  // Make it update instance if exist
   if (!req.body.name) {
     return resp.status(400).json({
       "info": "Bad Request",
@@ -144,14 +143,14 @@ router.patch('/server/instance', isAuth, (req, resp) => {
     })
   }
   IH.update(req.body.name, req.body.newName ? req.body.newName : null, req.body.newPath ? req.body.newPath : null, req.body.newPort ? req.body.newPort : null).then(async res => {
-    await ServerInstancer.killByName(req.body.name)
+    await ServerInstancer.killByName(req.body.name) // I was lazy, updating the server in anyway will completly kill the process then hit a refresh
     ServerInstancer.refresh()
     resp.status(200).json(res)
   })
 })
 
 // Delete Server Instance
-router.delete('/server/instance', async (req, resp) => {
+router.delete('/server/instance', isAuth, async (req, resp) => {
   if (!req.body.name) {
     return resp.status(400).json({
       "info": "Bad Request",
