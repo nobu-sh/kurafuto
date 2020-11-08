@@ -107,7 +107,7 @@ module.exports = () => ({
 
     proxy: {
       "/api": {
-        target: "http://localhost:8081",
+        target: config.devServer.api,
         changeOrigin: true,
       },
     },

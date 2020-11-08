@@ -25,10 +25,12 @@
 
 <script>
   import Axios from 'axios'
-
+  import io from 'socket.io-client'
+  import { socketUrl } from '../../kurafuto.config'
   export default {
     data() {
       return {
+        socket: io(socketUrl),
         loading: true,
         username: null,
       }

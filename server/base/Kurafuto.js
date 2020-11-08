@@ -10,19 +10,21 @@ let _LogQueue = []
 class Kurafuto extends EventEmitter {
   /**
    * @param {Object} options              Options passed to Kurafuto
-   * @param {Object} options.serverPath   Path to executable server file (relative from folder root)
+   * @param {Object} options.server       Mongo stored server instance
    * @param {Object} options.configPath   Path to config file for Kurafuto (relative from folder root)
    * @param {Object} options.scriptsPath  Path to Kurafuto scripts folder (relative from folder root)
    */
   constructor(options) {
     super()
-    this.server = resolve(__dirname, "../../", options.serverPath)
+    this.server = resolve(options.server.path)
     this.configPath = resolve(__dirname, "../../", options.configPath)
-    if (!existsSync(this.server)) return EXIT("Path to MCBE server executable does not exist!")
-    if (!existsSync(this.configPath)) return EXIT("Path to MCBE config is does not exist!")
+    if (!existsSync(this.server)) return this.EXIT(`Path given for server ${options.server.name} is not a valid path, please update the file path`)
+    if (!existsSync(this.configPath)) return this.EXIT("Path to MCBE config is does not exist!")
     this.config = require(this.configPath)
     this.stopping = false
     this.restarting = false
+    this.serverName = options.server.name
+    this.ServerId = options.server._id
     this.child
     this.Create_Server()
     this.Unclog_Logs()
@@ -31,14 +33,20 @@ class Kurafuto extends EventEmitter {
     if (this.stopping) return {
       "rejected": true,
       "reason": "Server is in shutdown process",
+      "serverName": this.serverName,
+      "serverID": this.ServerId,
     }
     if (this.restarting) return {
       "rejected": true,
       "reason": "Server is in restart process",
+      "serverName": this.serverName,
+      "serverID": this.ServerId,
     }
     if (this.child) return {
-      "started": false,
-      "reason": "This server is already running",
+      "rejected": true,
+      "reason": "Server is already running",
+      "serverName": this.serverName,
+      "serverID": this.ServerId,
     }
     this.child = spawn(this.server)
     this.Handle_Logs()
@@ -95,7 +103,7 @@ class Kurafuto extends EventEmitter {
   async Log_Parser(_stdout) {
     const _ExecutorProccess = _stdout
       .toString()
-      .match(/\[.*\]/)
+      .match(/\[.*]/)
     if (_ExecutorProccess && _ExecutorProccess
       .toString()
       .toLowerCase()
@@ -121,11 +129,11 @@ class Kurafuto extends EventEmitter {
       .toString()
       .replace(/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2} (V|I|W|E) /g, "")
       .replace(/\(.*\)/, "")
-      .replace(/\[CHAT\]/, "")
+      .replace(/\[CHAT]/, "")
       .replace(/\s+/g, " ")
       .replace(" ", "")
     let _Sender = _CleanChat
-      .match(/\[.*\] /)
+      .match(/\[.*] /)
     _CleanChat = _CleanChat.replace(_Sender, "")
     _Sender = _Sender
       .toString()
@@ -137,39 +145,49 @@ class Kurafuto extends EventEmitter {
       message: _CleanChat,
     }
   }
-  async Stop_All() {
-    if (this.stopping) return {
-      "rejected": true,
-      "reason": "Server already in shutdown process",
-    }
-    if (this.restarting) return {
-      "rejected": true,
-      "reason": "Server is in restart process",
-    }
-    this.stopping = true
-    this.child.stdin.write('stop' + "\n")
-    setTimeout(() => {
-      this.child.kill()
-      this.child = null
-      this.stopping = false
-      process.exit()
-    }, 3000)
-  }
+  // async Stop_All() {
+  //   if (this.stopping) return {
+  //     "rejected": true,
+  //     "reason": "Server already in shutdown process",
+  //     "name": this.serverName,
+  //     "id": this.ServerId,
+  //   }
+  //   if (this.restarting) return {
+  //     "rejected": true,
+  //     "reason": "Server is in restart process",
+  //     "name": this.serverName,
+  //     "id": this.ServerId,
+  //   }
+  //   this.stopping = true
+  //   this.child.stdin.write('stop' + "\n")
+  //   setTimeout(() => {
+  //     this.child.kill()
+  //     this.child = null
+  //     this.stopping = false
+  //     process.exit()
+  //   }, 3000)
+  // }
   async Stop_Server() {
     return new Promise((resolve) => {
       if (this.stopping) resolve({
         "rejected": true,
         "reason": "Server already in shutdown process",
+        "serverName": this.serverName,
+        "serverID": this.ServerId,
       })
       if (this.restarting) resolve({
         "rejected": true,
         "reason": "Server is in restart process",
+        "serverName": this.serverName,
+        "serverID": this.ServerId,
       })
-      this.stopping = true
       if (!this.child) resolve({
         "rejected": true,
-        "reason": "This server is not running",
+        "reason": "Server is not running",
+        "serverName": this.serverName,
+        "serverID": this.ServerId,
       })
+      this.stopping = true
       this.child.stdin.write('stop' + "\n")
       setTimeout(() => {
         this.child.kill()
@@ -177,6 +195,8 @@ class Kurafuto extends EventEmitter {
         this.stopping = false
         resolve({
           "stopped": true,
+          "serverName": this.serverName,
+          "serverID": this.ServerId,
         })
       }, 3000)
     })
@@ -186,16 +206,22 @@ class Kurafuto extends EventEmitter {
       if (this.restarting) resolve({
         "rejected": true,
         "reason": "Server already in restart process",
+        "serverName": this.serverName,
+        "serverID": this.ServerId,
       })
       if (this.stopping) resolve({
         "rejected": true,
         "reason": "Server is in shutdown process",
+        "serverName": this.serverName,
+        "serverID": this.ServerId,
       })
-      this.restarting = true
       if (!this.child) resolve({
         "rejected": true,
-        "reason": "This server is not running",
+        "reason": "Server is not running",
+        "serverName": this.serverName,
+        "serverID": this.ServerId,
       })
+      this.restarting = true
       this.child.stdin.write('stop' + "\n")
       setTimeout(() => {
         this.child.kill()
@@ -204,6 +230,8 @@ class Kurafuto extends EventEmitter {
           this.restarting = false
           resolve({
             "restarted": true,
+            "serverName": this.serverName,
+            "serverID": this.ServerId,
           })
         }, 2000)
       }, 3000)
@@ -212,19 +240,40 @@ class Kurafuto extends EventEmitter {
   async Execute_Command(_command) {
     this.child.stdin.write(`${_command}\r\n`)
     
-    return "Command sent to server process"
+    return {
+      "info": "Command forwarded to child process",
+      "serverName": this.serverName,
+      "serverID": this.ServerId,
+    }
   }
   async Final_Chat(_out) {
-    return this.emit("KURAFUTO_CHAT", _out)
+    return this.emit("KURAFUTO_CHAT", {
+      serverName: this.serverName,
+      serverID: this.ServerId,
+      content: _out,
+    })
   }
   async Final_Log(_out) {
-    return this.emit("KURAFUTO_LOG", _out)
+    return this.emit("KURAFUTO_LOG", {
+      serverName: this.serverName,
+      serverID: this.ServerId,
+      content: _out,
+    })
   }
-}
-
-function EXIT (message) {
-  console.log(`\n\n${chalk.bgRed("Error")} ${chalk.grey.bold(message)}\n\n`)
-  process.exit(0)
+  async Is_Online() {
+    if (this.child) return true
+    else return false
+  }
+  async EXIT (message) {
+    console.log(`\n\n${chalk.bgRed("Error")} ${chalk.grey.bold(message)}\n\n`)
+    setInterval(() => {
+      this.emit("KURAFUTO_ERR", {
+        serverName: this.serverName,
+        serverID: this.ServerId,
+        content: message,
+      })
+    }, 20000)
+  }
 }
 
 module.exports = Kurafuto

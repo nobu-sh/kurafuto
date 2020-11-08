@@ -6,14 +6,18 @@ const app = require('express')()
 const http = require('http').createServer(app)
 const io = require('socket.io')(http)
 const path = require('path')
-
 const cors = require('cors')
 const session = require('express-session')
+const MongoStore = require('connect-mongo')(session)
+const mongoose = require('mongoose')
 
 const db = require('./database/mongo')
 
 db.then(() => console.log(`${chalk.magentaBright("{Kurafuto Database}")} ${chalk.gray(new Date().toISOString())} ${chalk.green("[Mongo]")} Successfully established a connection to database ${config.mongoDatabase} through user ${config.mongoUsername}`))
-  .catch(err => console.log(`${chalk.magentaBright("{Kurafuto Database}")} ${chalk.gray(new Date().toISOString())} ${chalk.red("[Mongo]")} Could not establish a connection, action failed with ${err}`))
+  .catch(err => {
+    console.log(`${chalk.magentaBright("{Kurafuto Database}")} ${chalk.gray(new Date().toISOString())} ${chalk.red("[Mongo]")} Could not establish a connection, action failed with ${err}`)
+    process.exit()
+  })
 
 const port = process.env.NODE_ENV === 'development' 
   ? config.developmentPort
@@ -23,6 +27,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use(session({
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
   secret: config.sessionSec,
   resave: false,
   saveUninitialized: true,
@@ -43,12 +48,3 @@ app.get('*', (req, res) => {
 })
 
 http.listen(port, () => console.log(`Express server listening on port ${port}`))
-
-const { Kurafuto } = require("./instances/kurafuto")
-if (config.debugEnabled) {
-  console.log(chalk.bgRed.black("Debug Enabled, multiple servers will result in \"diverse\" logs"))
-  if (process.env.NODE_ENV === "development") {
-    console.log(chalk.bgRed.black("Kurafuto running in development mode, command line will not work!"))
-  }
-  const debug = new (require('./base/Debug'))(Kurafuto)
-}

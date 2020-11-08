@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3d527e22-2b9b-40b9-899f-3bd7c94fb959" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/kurafuto.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/kurafuto.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/server/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/server/base/Kurafuto.js" beforeDir="false" afterPath="$PROJECT_DIR$/server/base/Kurafuto.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +39,7 @@
       <option name="presentableId" value="Default" />
       <updated>1604768750301</updated>
       <workItem from="1604768752342" duration="563000" />
+      <workItem from="1604772004701" duration="56000" />
     </task>
     <servers />
   </component>

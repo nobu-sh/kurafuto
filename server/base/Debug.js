@@ -8,6 +8,11 @@ class Debug {
    * @param {import('./Kurafuto')} kurafuto Instance of kurafuto
    */
   constructor(kurafuto) {
+    console.log(chalk.red(`Debug logs enabled for server ${kurafuto.serverName}`))
+    console.log(chalk.yellow(`Please bear in mind debug logs will most likely be flooded with all connected servers logs`))
+    if (process.env.NODE_ENV === "development") {
+      console.log(chalk.red(`Kurafuto is running in a development environment debug command line non-functional `))
+    }
     this.kurafuto = kurafuto
     this.interface = createInterface({
       input: process.stdin,
@@ -25,13 +30,13 @@ class Debug {
   }
   async Chat_Handle() {
     this.kurafuto.on("KURAFUTO_CHAT", res => {
-      console.log(`${chalk.magentaBright("{KurafutoChat::DEBUG}")} ${chalk.blue(`<${res.author}>`)} ${res.message}`)
+      console.log(`${chalk.magentaBright("{KurafutoChat::DEBUG}")} ${chalk.red(`[${this.kurafuto.serverName}]`)} ${chalk.blue(`<${res.content.author}>`)} ${res.content.message}`)
     })
   }
   async Log_Handle() {
     this.kurafuto.on("KURAFUTO_LOG", async res => {
-      let color = await this.Get_Color(res.process)
-      console.log(`${chalk.magentaBright("{KurafutoLog::DEBUG}")} ${chalk.gray(res.timestamp)} ${chalk `{${color} ${res.process}}`} ${res.log}`)
+      let color = await this.Get_Color(res.content.process)
+      console.log(`${chalk.magentaBright("{KurafutoLog::DEBUG}")} ${chalk.red(`<${this.kurafuto.serverName}>`)} ${chalk.gray(res.content.timestamp)} ${chalk `{${color} ${res.content.process}}`} ${res.content.log}`)
     })
   }
   async Get_Color(ExPR) {
@@ -46,8 +51,8 @@ class Debug {
     return Obj[0] ? Obj[0].color : ColorRefs.defaultColor
   }
   async Command_Handler(line) {
-    if (line.toLowerCase() === "stopall") return await this.kurafuto.Stop_All()
-    else if (line.toLowerCase() === "stop") return await this.kurafuto.Stop_Server()
+    //if (line.toLowerCase() === "stopall") return await this.kurafuto.Stop_All()
+    if (line.toLowerCase() === "stop") return await this.kurafuto.Stop_Server()
     else if (line.toLowerCase() === "restart") return this.kurafuto.Restart_Server()
     else if (line.toLowerCase() === "start") return this.kurafuto.Create_Server()
     else return this.kurafuto.Execute_Command(line.toString())
