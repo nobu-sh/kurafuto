@@ -1,9 +1,10 @@
 const IH = require('../utils/instanceHandler')
 const config = require('../../kurafuto.config')
 const chalk = require('chalk')
+const { EventEmitter } = require("events")
 let started = false
 let instances = []
-class Instances {
+class Instances extends EventEmitter {
   constructor() {
     this.start()
   }
@@ -34,7 +35,29 @@ class Instances {
             debug: config.debugEnabled ? new (require('./Debug'))(instance) : false,
           },
         )
+        this.registerEventEmitters(instance)
       })
+    })
+  }
+  /**
+   * Used to initially register all events for server
+   * @param {Instance} instance 
+   */
+  async registerEventEmitters(instance) {
+    if (!instance.serverName && !instance.serverID) {
+      return {
+        rejected: true,
+        reason: "This is only needed to initially register the events",
+      }
+    }
+    instance.on("KURAFUTO_CHAT", data => {
+      this.emit("KurafutoChat", data)
+    })
+    instance.on("KURAFUTO_LOG", data => {
+      this.emit("KurafutoLog", data)
+    })
+    instance.on("KURAFUTO_ERR", data => {
+      this.emit("KurafutoError", data)
     })
   }
   /**
@@ -61,6 +84,7 @@ class Instances {
               debug: config.debugEnabled ? new (require('./Debug'))(instance) : false,
             },
           )
+          this.registerEventEmitters(instance)
         }
       })
     })

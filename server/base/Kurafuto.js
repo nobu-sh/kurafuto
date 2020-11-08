@@ -24,7 +24,7 @@ class Kurafuto extends EventEmitter {
     this.stopping = false
     this.restarting = false
     this.serverName = options.server.name
-    this.ServerId = options.server._id
+    this.ServerID = options.server._id
     this.child
     this.Create_Server()
     this.Unclog_Logs()
@@ -34,19 +34,19 @@ class Kurafuto extends EventEmitter {
       "rejected": true,
       "reason": "Server is in shutdown process",
       "serverName": this.serverName,
-      "serverID": this.ServerId,
+      "serverID": this.ServerID,
     }
     if (this.restarting) return {
       "rejected": true,
       "reason": "Server is in restart process",
       "serverName": this.serverName,
-      "serverID": this.ServerId,
+      "serverID": this.ServerID,
     }
     if (this.child) return {
       "rejected": true,
       "reason": "Server is already running",
       "serverName": this.serverName,
-      "serverID": this.ServerId,
+      "serverID": this.ServerID,
     }
     this.child = spawn(this.server)
     this.Handle_Logs()
@@ -150,13 +150,13 @@ class Kurafuto extends EventEmitter {
   //     "rejected": true,
   //     "reason": "Server already in shutdown process",
   //     "name": this.serverName,
-  //     "id": this.ServerId,
+  //     "id": this.ServerID,
   //   }
   //   if (this.restarting) return {
   //     "rejected": true,
   //     "reason": "Server is in restart process",
   //     "name": this.serverName,
-  //     "id": this.ServerId,
+  //     "id": this.ServerID,
   //   }
   //   this.stopping = true
   //   this.child.stdin.write('stop' + "\n")
@@ -173,19 +173,19 @@ class Kurafuto extends EventEmitter {
         "rejected": true,
         "reason": "Server already in shutdown process",
         "serverName": this.serverName,
-        "serverID": this.ServerId,
+        "serverID": this.ServerID,
       })
       if (this.restarting) resolve({
         "rejected": true,
         "reason": "Server is in restart process",
         "serverName": this.serverName,
-        "serverID": this.ServerId,
+        "serverID": this.ServerID,
       })
       if (!this.child) resolve({
         "rejected": true,
         "reason": "Server is not running",
         "serverName": this.serverName,
-        "serverID": this.ServerId,
+        "serverID": this.ServerID,
       })
       this.stopping = true
       this.child.stdin.write('stop' + "\n")
@@ -196,7 +196,7 @@ class Kurafuto extends EventEmitter {
         resolve({
           "stopped": true,
           "serverName": this.serverName,
-          "serverID": this.ServerId,
+          "serverID": this.ServerID,
         })
       }, 3000)
     })
@@ -207,19 +207,19 @@ class Kurafuto extends EventEmitter {
         "rejected": true,
         "reason": "Server already in restart process",
         "serverName": this.serverName,
-        "serverID": this.ServerId,
+        "serverID": this.ServerID,
       })
       if (this.stopping) resolve({
         "rejected": true,
         "reason": "Server is in shutdown process",
         "serverName": this.serverName,
-        "serverID": this.ServerId,
+        "serverID": this.ServerID,
       })
       if (!this.child) resolve({
         "rejected": true,
         "reason": "Server is not running",
         "serverName": this.serverName,
-        "serverID": this.ServerId,
+        "serverID": this.ServerID,
       })
       this.restarting = true
       this.child.stdin.write('stop' + "\n")
@@ -231,7 +231,7 @@ class Kurafuto extends EventEmitter {
           resolve({
             "restarted": true,
             "serverName": this.serverName,
-            "serverID": this.ServerId,
+            "serverID": this.ServerID,
           })
         }, 2000)
       }, 3000)
@@ -243,20 +243,20 @@ class Kurafuto extends EventEmitter {
     return {
       "info": "Command forwarded to child process",
       "serverName": this.serverName,
-      "serverID": this.ServerId,
+      "serverID": this.ServerID,
     }
   }
   async Final_Chat(_out) {
     return this.emit("KURAFUTO_CHAT", {
       serverName: this.serverName,
-      serverID: this.ServerId,
+      serverID: this.ServerID,
       content: _out,
     })
   }
   async Final_Log(_out) {
     return this.emit("KURAFUTO_LOG", {
       serverName: this.serverName,
-      serverID: this.ServerId,
+      serverID: this.ServerID,
       content: _out,
     })
   }
@@ -269,7 +269,7 @@ class Kurafuto extends EventEmitter {
     setInterval(() => {
       this.emit("KURAFUTO_ERR", {
         serverName: this.serverName,
-        serverID: this.ServerId,
+        serverID: this.ServerID,
         content: message,
       })
     }, 20000)
