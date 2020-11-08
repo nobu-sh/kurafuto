@@ -65,7 +65,7 @@ class Instances extends EventEmitter {
    */
   async refresh() {
     IH.getAll().then(async res => {
-      if (!res[0]) return console.log(chalk.yellow("No server instances in database, skipping server(s) startup..."))
+      if (!res[0]) return console.log(chalk.yellow("No server instances in database, skipping server(s) refresh..."))
       res.forEach(async obj => {
         let si = await instances.find(s => s.id.equals(obj._id))
         if (!si) {
