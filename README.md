@@ -4,7 +4,7 @@
   <p align="center">
     <a href="https://discord.com/invite/Vgyh3yv"><img src="https://img.shields.io/discord/752577425811964018?color=7289da&logo=discord&logoColor=white&style=for-the-badge" alt="Discord Server"/></a>
     <a><img src="https://img.shields.io/github/languages/code-size/NobUwU/kurafuto?color=%23a85fc9&label=Repo%20size&logo=github&style=for-the-badge" alt="Repo Size"/></a>
-    <a><img src="https://img.shields.io/github/commit-activity/y/NobUwU/kurafuto?logo=github&style=for-the-badge" alt="Commits Yearly"/></a>
+    <a><img src="https://img.shields.io/github/commit-activity/m/NobUwU/kurafuto?logo=github&style=for-the-badge" alt="Commits Yearly"/></a>
     <a><img src="https://img.shields.io/github/last-commit/NobUwU/kurafuto?logo=github&style=for-the-badge" alt="Last Commit"/></a>
   </p>
   <p>Kurafuto is a simple project utilizing Node.js and Vue to create a web interface for Element Zero's BDS console</p>
