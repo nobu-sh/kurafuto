@@ -9,7 +9,7 @@
   </p>
   <p>Kurafuto is a simple project utilizing Node.js and Vue to create a web interface for Element Zero's BDS console</p>
 </p>
-# `WARN` DOES NOT FUNCTION:: I will be doing a complete rewrite of this once I finish sumii.js!
+# `WARN` DOES NOT FUNCTION I will be doing a complete rewrite of this once I finish sumii.js!
 
 ### How to Use
 
