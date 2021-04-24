@@ -10,7 +10,9 @@
   <p>Kurafuto is a simple project utilizing Node.js and Vue to create a web interface for Element Zero's BDS console</p>
 </p>
 
-# WARN DOES NOT FUNCTION I will be doing a complete rewrite of this once I finish Akuma.js!
+# Read 
+This is in a broken state and does not work anymore as element zero does not function anymore. I will make a new version of this once i get time to support all popular bedrock server solutions like pocketmine, aternos, and possibly java geyser floodgate configs.
+
 
 ### How to Use
 
