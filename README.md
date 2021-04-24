@@ -11,7 +11,7 @@
 </p>
 
 # `!IMPORTANT` 
-#### This is in a broken state and does not work anymore as element zero does not function anymore. I will make a new version of this once i get time to support all popular bedrock server solutions like pocketmine, aternos, and possibly java geyser floodgate configs.
+### This is in a broken state and does not work anymore as element zero does not function anymore. I will make a new version of this once i get time to support all popular bedrock server solutions like pocketmine, aternos, and possibly java geyser floodgate configs.
 
 
 ### How to Use
